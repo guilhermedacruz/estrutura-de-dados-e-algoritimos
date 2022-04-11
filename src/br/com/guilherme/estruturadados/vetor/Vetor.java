@@ -31,6 +31,7 @@ public class Vetor {
 	
 	// Método Para boolean
 	public boolean adiciona (String elemento) {
+		aumentaCapacidade();
 		if (tamanho < elementos.length) {
 			elementos[tamanho] = elemento;
 			tamanho++;
@@ -38,6 +39,51 @@ public class Vetor {
 		}
 		return false;
 	}
+	
+	public boolean adiciona(int posicao, String elemento) {
+		if (!(posicao >= 0 && posicao < tamanho)) {
+			throw new IllegalArgumentException("Posição Inválida");
+		}
+		
+		aumentaCapacidade();
+		
+		//mover todos os elementos
+		for (int i= this.tamanho; i >= posicao; i--) {
+			this.elementos[i+1] = this.elementos[i];
+		}
+		this.elementos[posicao] = elemento;
+		this.tamanho++;
+		return true;
+	}
+	
+	private void aumentaCapacidade() {
+		if(this.tamanho == this.elementos.length) {
+			String[] elementosNovos = new String[this.elementos.length*2];
+			for(int i=0; i<this.elementos.length; i++) {
+				elementosNovos[i] = this.elementos[i];
+			}
+			this.elementos = elementosNovos;
+		}
+	}
+	
+	
+	
+	
+	public String busca(int posicao) {
+		if (!(posicao >= 0 && posicao < tamanho)) {
+			throw new IllegalArgumentException("Posição Inválida");
+		}
+		return this.elementos[posicao];
+	}
+	public int busca(String elemento) {
+		for (int i=0; i<this.tamanho; i++) {
+			if(this.elementos[i].equals(elemento)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
 	
 	public int tamanho() {
 		return this.tamanho;
