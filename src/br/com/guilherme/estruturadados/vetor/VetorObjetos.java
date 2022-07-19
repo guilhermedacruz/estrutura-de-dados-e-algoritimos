@@ -2,11 +2,11 @@ package br.com.guilherme.estruturadados.vetor;
 
 import java.util.Arrays;
 
-public class Vetor {
-	private String[] elementos;
+public class VetorObjetos {
+	private Object[] elementos;
 	private int tamanho;
 	
-	public Vetor(int capacidade) {
+	public VetorObjetos(int capacidade) {
 		this.elementos = new String [capacidade];
 		this.tamanho = 0 ;
 	}
@@ -30,7 +30,7 @@ public class Vetor {
 	}*/
 	
 	// Método Para boolean
-	public boolean adiciona (String elemento) {
+	public boolean adiciona (Object elemento) {
 		aumentaCapacidade();
 		if (tamanho < elementos.length) {
 			elementos[tamanho] = elemento;
@@ -40,15 +40,15 @@ public class Vetor {
 		return false;
 	}
 	
-	//Adicionar elemento em qualquer posição do vetor
-	public boolean adiciona(int posicao, String elemento) {
+	public boolean adiciona(int posicao, Object elemento) {
 		if (!(posicao >= 0 && posicao < tamanho)) {
 			throw new IllegalArgumentException("Posição Inválida");
-		}	
+		}
+		
 		aumentaCapacidade();
 		
 		//mover todos os elementos
-		for (int i= this.tamanho-1; i >= posicao; i--) {
+		for (int i= this.tamanho; i >= posicao; i--) {
 			this.elementos[i+1] = this.elementos[i];
 		}
 		this.elementos[posicao] = elemento;
@@ -58,7 +58,7 @@ public class Vetor {
 	
 	private void aumentaCapacidade() {
 		if(this.tamanho == this.elementos.length) {
-			String[] elementosNovos = new String[this.elementos.length*2];
+			Object[] elementosNovos = new String[this.elementos.length*2];
 			for(int i=0; i<this.elementos.length; i++) {
 				elementosNovos[i] = this.elementos[i];
 			}
@@ -68,16 +68,14 @@ public class Vetor {
 	
 	
 	
-	//obter elemento de uma det posição
-	public String busca(int posicao) {
+	
+	public Object busca(int posicao) {
 		if (!(posicao >= 0 && posicao < tamanho)) {
 			throw new IllegalArgumentException("Posição Inválida");
 		}
 		return this.elementos[posicao];
 	}
-	
-	//verificar se o elemento existe
-	public int busca(String elemento) {
+	public int busca(Object elemento) {
 		for (int i=0; i<this.tamanho; i++) {
 			if(this.elementos[i].equals(elemento)) {
 				return i;
@@ -98,7 +96,7 @@ public class Vetor {
 	}
 	
 	
-	// Para tamanho e imprimir elementos de um array
+	
 	public int tamanho() {
 		return this.tamanho;
 	}
@@ -107,13 +105,12 @@ public class Vetor {
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append("[");
-		//tamanho-1 : para a penúltima posição
+		
 		for(int i = 0; i<this.tamanho-1; i++) {
 			s.append(this.elementos[i]);
 			s.append(",");
 		}
 		if(this.tamanho > 0) {
-		//(elementos[tamanho-1]) será para o ultimo registro 
 			s.append (this.elementos[this.tamanho-1]);
 		}
 		s.append("]");
